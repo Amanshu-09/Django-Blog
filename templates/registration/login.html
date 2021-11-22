@@ -1,0 +1,21 @@
+{% extends "base.html" %} 
+{% block title %}
+<title>Login to Django Blogs</title>          
+{% endblock title %}
+{% block content %}
+
+<div class="container m-5">
+  <h1>Log in to Django Blogs</h1>
+
+  <div class="form-group">
+    <form method="post">
+      {% csrf_token %}
+      <input type="text" class="form-control my-3" placeholder="Username" name="username">
+      <input type="password" class="form-control my-3" placeholder="password" name="password">
+      <button class="btn btn-primary mr-2">Login</button>
+      <a class="btn btn-primary" href="{% url 'signup' %}">Sign Up</a>
+    </form>
+  </div>
+</div>
+
+{% endblock content %} {% block sidebar %} {% endblock sidebar %}

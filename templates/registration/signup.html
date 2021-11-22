@@ -1,0 +1,17 @@
+{% extends "base.html" %} {% block title %}
+<title>Sign Up to Django Blogs</title>
+{% endblock title %} {% block content %}
+
+<div class="container m-5">
+  <h1>Sign Up to Django Blogs</h1>
+
+  <div class="form-group">
+    <form method="post">
+      {% csrf_token %} {{ form.as_p }}
+      <button class="btn btn-primary mr-2">Sign Up</button>
+      <a class="btn btn-primary" href="{% url 'login' %}">Log in</a>
+    </form>
+  </div>
+</div>
+
+{% endblock content %} {% block sidebar %} {% endblock sidebar %}

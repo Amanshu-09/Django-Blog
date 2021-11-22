@@ -1,0 +1,74 @@
+{% extends "base.html" %}
+{% block title %}
+<title>All Blogs</title>          
+{% endblock title %}
+{% block content %}
+        <!-- Page header with logo and tagline-->
+        <header class="py-5 bg-light border-bottom mb-4">
+          <div class="container">
+              <div class="text-center my-2">
+                  <h1 class="fw-bolder">Welcome to Blog Home!</h1>
+                  {% if user.is_authenticated %}
+                  <h3>{{ user }}</h3>
+                  {% else %}
+                  <h3>Guest</h3>                   
+                  {% endif %}
+              </div>
+          </div>
+        </header>
+        <!-- Page content-->
+        <div class="container">
+            <div class="row">
+                <!-- Blog entries-->
+                <div class="col-lg-8">
+                    <!-- Featured blog post-->
+                    {% for post in blogs %}
+                    <div class="card mb-4">
+                      <div class="card-body">
+                          <div class="small text-muted">{{ post.posted_on }}</div>
+                          <h2 class="card-title">{{post.title}}</h2>
+                          <p class="card-text">{{ post.body | truncatewords:100 | safe }}</p>
+                          <a class="btn btn-primary" href="{% url 'blog_detail' post.pk %}">Read more →</a>
+                      </div>
+                    </div>
+                    {% endfor %}
+                    <!-- Nested row for non-featured blog posts-->
+                    <!-- <div class="row">
+                        <div class="col-lg-6">
+                            //Blog post
+                            <div class="card mb-4">
+                                <a href="#!"><img class="card-img-top" src="https://dummyimage.com/700x350/dee2e6/6c757d.jpg" alt="..." /></a>
+                                <div class="card-body">
+                                    <div class="small text-muted">January 1, 2021</div>
+                                    <h2 class="card-title h4">Post Title</h2>
+                                    <p class="card-text">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Reiciendis aliquid atque, nulla.</p>
+                                    <a class="btn btn-primary" href="#!">Read more →</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div> -->
+                    <!-- Pagination-->
+                    <nav aria-label="Pagination">
+                        <hr class="my-0" />
+                        <h6 class="m-1" ><b>{{ blogs }}</b></h6>
+                        <ul class="pagination justify-content-center my-4">
+                            {% if blogs.has_previous %}
+                            <li class="page-item"><a class="page-link" href="?page=1" tabindex="-1" aria-disabled="true">Latest</a></li>
+                            <li class="page-item"><a class="page-link" href="?page={{ blogs.previous_page_number }}">Prev</a></li>
+                            {% else %}
+                            <li class="page-item disabled"><a class="page-link" href="#!" tabindex="-1" aria-disabled="true">Latest</a></li>
+                            <li class="page-item disabled"><a class="page-link" href="#!" tabindex="-1" aria-disabled="true">Prev</a></li>
+                            {% endif %}
+
+                            <li class="page-item active" aria-current="page"><a class="page-link" href="#!">{{ blogs.number }}</a></li>
+
+                            {% if blogs.has_next %}
+                            <li class="page-item"><a class="page-link" href="?page={{ blogs.next_page_number }}" tabindex="-1" aria-disabled="true">Next</a></li>
+                            <li class="page-item"><a class="page-link" href="?page={{ blogs.paginator.num_pages }}">Oldest</a></li>
+                            {% else %}
+                            <li class="page-item disabled"><a class="page-link" href="#!" tabindex="-1" aria-disabled="true">Next</a></li>
+                            <li class="page-item disabled"><a class="page-link" href="#!">Oldest</a></li>
+                            {% endif %}                        </ul>
+                    </nav>
+                </div>
+{% endblock content %}
